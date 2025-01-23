@@ -73,14 +73,12 @@ public class Order {
 		sb.append("ORDER SUMMARY\n");
 		sb.append("Order moment: " + sdf.format(getMoment()) + "\n");
 		sb.append("Order status: "+ getStatus().name() + "\n");
-		sb.append(String.format("Client: %s (%s) - %s%n", getClient().getName(), sdf.format(getClient().getBirthDate()).substring(0, 10), getClient().getEmail()));
-		sb.append("Order items:" +"\n");
+		sb.append("Client: "+ getClient()+"\n");
+		sb.append("Order items: "+"\n");
 		for(OrderItem orderItem : items) {
-			sb.append(String.format("%s, $%.2f, Quantity: %d, Subtotal: $%.2f%n", orderItem.getProduct().getName(), 
-					orderItem.getPrice(), orderItem.getQuantity(), orderItem.subTotal()));
+			sb.append(orderItem +"\n");
 		}
-		sb.append("Total price: $"+total());
-		
+		sb.append("Total price: "+total());
 		return sb.toString();
 	}
 }
