@@ -1,5 +1,6 @@
 package entities;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -7,6 +8,8 @@ import java.util.List;
 import entities.enums.OrderStatus;
 
 public class Order {
+	
+	private static SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 	
 	private Date moment;
 	private OrderStatus status;
@@ -63,5 +66,21 @@ public class Order {
 			total += item.subTotal();
 		}
 		return total;
+	}
+	
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("ORDER SUMMARY\n");
+		sb.append("Order moment: " + sdf.format(getMoment()) + "\n");
+		sb.append("Order status: "+ getStatus().name() + "\n");
+		sb.append(String.format("Client: %s (%s) - %s%n", getClient().getName(), sdf.format(getClient().getBirthDate()).substring(0, 10), getClient().getEmail()));
+		sb.append("Order items:" +"\n");
+		for(OrderItem orderItem : items) {
+			sb.append(String.format("%s, $%.2f, Quantity: %d, Subtotal: $%.2f%n", orderItem.getProduct().getName(), 
+					orderItem.getPrice(), orderItem.getQuantity(), orderItem.subTotal()));
+		}
+		sb.append("Total price: $"+total());
+		
+		return sb.toString();
 	}
 }
